@@ -1,6 +1,7 @@
 from confluent_kafka import Producer
 import json
 import time
+import uuid
 
 def delivery_report(err, msg):
     """ Fonction de retour d'appel exécutée une fois que le message a été livré ou une erreur a été signalée. """
@@ -11,8 +12,8 @@ def delivery_report(err, msg):
 
 def send_messages(producer, topic, messages):
     """ Fonction pour envoyer une liste de messages à un topic Kafka donné. """
-    for key, value in messages:
-        producer.produce(topic, key=key, value=value.encode('utf-8'), callback=delivery_report)
+    for message in messages:
+        producer.produce(topic, key=message[0], value=message[1].encode('utf-8'), callback=delivery_report)
     producer.flush()
 
 def main():

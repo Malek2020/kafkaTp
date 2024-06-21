@@ -1,0 +1,3 @@
+# consumers/requirements.txt
+kafka-python
+pymongo
