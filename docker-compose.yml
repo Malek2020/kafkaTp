@@ -1,5 +1,4 @@
 version: '3'
-
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:6.2.1
@@ -27,3 +26,14 @@ services:
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+
+  kafdrop:
+    image: obsidiandynamics/kafdrop
+    hostname: kafdrop
+    container_name: kafdrop
+    ports:
+      - "9010:9000"  # Changez le port externe à 9010
+    environment:
+      KAFKA_BROKERCONNECT: kafka:29092
+    depends_on:
+      - kafka
